@@ -1,0 +1,28 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+  # Définition des paramètres
+
+services:
+  # Définition des services par défaut
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  # Définition du service PizzaManager
+  App\Service\PizzaManager:
+    autowire: true
+    autoconfigure: true
+
+  # Définition des services dans le répertoire src/
+  App\:
+    resource: "../src/*"
+    exclude:
+      - "../src/DependencyInjection/"
+      - "../src/Kernel.php"
+
+  # add more service definitions when explicit configuration is needed
+  # please note that last definitions always *replace* previous ones

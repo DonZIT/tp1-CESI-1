@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Pizzas{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">Liste des Pizzas</h1>
+
+    <table class="table table-bordered shadow-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th>Shortcut</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pizza in pizzas %}
+                <tr>
+                    <td>{{ pizza.shortcut }}</td>
+                    <td>{{ pizza.name }}</td>
+                    <td>{{ pizza.price }}</td>
+                    <td>
+                        <a href="{{ path('app_pizza_edit', {'id': pizza.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                        <form action="{{ path('app_pizza_delete', {'id': pizza.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette pizza ?');" class="d-inline">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pizza.id) }}">
+                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pizza_new') }}" class="btn btn-success">Ajouter une nouvelle pizza</a>
+{% endblock %}
